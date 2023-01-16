@@ -31,16 +31,16 @@ export class BubbleClass
     }
 
     //checks if this bubble an another collide if so return true
-    checkCollison(otherBubble)
+    checkCollison(xPoint,yPoint,radius)
     {
         //we check by looking at the two centers and seeing if the distance between them is less or equal to their combined radius
         
 
-        let xCalc=Math.abs(this.xPos-otherBubble.xPos);
-        let yCalc=Math.abs(this.yPos-otherBubble.yPos);
+        let xCalc=Math.abs(this.xPos-xPoint);
+        let yCalc=Math.abs(this.yPos-yPoint);
         //use pythagoras theorem to calculate the distance
         let distSquare=xCalc*xCalc+yCalc*yCalc;
-        let radiusDistSquare=(this.radius+otherBubble.radius)*(this.radius+otherBubble.radius);
+        let radiusDistSquare=(this.radius+radius)*(this.radius+radius);
         if(distSquare<=radiusDistSquare)
         {
             return true;

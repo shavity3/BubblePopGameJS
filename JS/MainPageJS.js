@@ -4,6 +4,7 @@ import { BubbleClass } from "./BubbleClass.js"
 import { MAX_BUBBLE_RADIUS } from "./CONFIG.js"
 
 let bubbleArray = [];
+let bubbleKilled=0;
 
 function createBubble()
 {
@@ -53,7 +54,8 @@ function checkBubbleCollision(bubble)
 {
     for(let runner=0;runner<bubbleArray.length;runner++)
     {
-        if(bubble.checkCollison(bubbleArray[runner]))
+        let runnerBubble=bubbleArray[runner];
+        if(bubble.checkCollison(runnerBubble.xPos,runnerBubble.yPos,runnerBubble.radius))
         {
             return true;
         }
@@ -73,7 +75,7 @@ function checkAllBubbleCollision()
         for(let secondBubbleRunner=firstBubbleRunner+1;secondBubbleRunner<bubbleArray.length;secondBubbleRunner++)
         {
             let secondBubble=bubbleArray[secondBubbleRunner];
-            let isCollision=firstBubble.checkCollison(secondBubble);
+            let isCollision=firstBubble.checkCollison(secondBubble.xPos,secondBubble.yPos,secondBubble.radius);
             if(isCollision)
             {
                 firstBubble.kill();
@@ -192,9 +194,29 @@ function resetBoard()
     context.clearRect(0,0,canvasWidth,canvasHeight);
 }
 
+//kill bubles that were clicked
+function clickEvent(e)
+{
+    let canvas=document.getElementById("bubbleContainerCanvas");
+    let boundingElement = canvas.getBoundingClientRect();
+    //let borderLeftLength=(canvas.offsetLeft-canvas.clientLeft)/2;
+    //let borderTopLength=(canvas.offsetTop-canvas.clientTop)/2;
+    //let filterFunc=(bubble) => { return bubble.checkCollison(e.clientX-boundingElement.top-borderTopLength,e.clientY-boundingElement.left-borderLeftLength,0) };
+    let filterFunc=(bubble) => { return bubble.checkCollison(e.clientX-boundingElement.top,e.clientY-boundingElement.left,0) };
+    let items=bubbleArray.filter(filterFunc);
+    for(let i=0;i<items.length;i++)
+    {
+        items[i].kill();
+        bubbleKilled++;
+    }
+}
+
 fillBubbleArray();
 
 
 document.getElementById("resetButton").onclick=resetBoard;
 
 window.requestAnimationFrame(animatedBoard);
+
+let canvas=document.getElementById("bubbleContainerCanvas");
+canvas.addEventListener("click", (e)=>{clickEvent(e);});
