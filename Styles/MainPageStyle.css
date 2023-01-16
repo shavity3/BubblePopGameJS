@@ -1,0 +1,9 @@
+/* TODO: replace height and width with better radius*/
+
+.bubbleContainer{
+    width: 80%;
+    height: 80%;
+    border: 5px;
+    border-color: black;
+    border-style: solid;
+}
