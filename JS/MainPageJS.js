@@ -113,7 +113,6 @@ function checkOutofBoundBubbles()
     }
 }
 
-//TODO add deletion method, AKA simply not drawing bubbles that have left the canvas frame
 function drawBubble(bubbleToDraw)
 {
     let bubbleContainerElement=document.getElementById("bubbleContainerCanvas");
@@ -199,10 +198,9 @@ function clickEvent(e)
 {
     let canvas=document.getElementById("bubbleContainerCanvas");
     let boundingElement = canvas.getBoundingClientRect();
-    //let borderLeftLength=(canvas.offsetLeft-canvas.clientLeft)/2;
-    //let borderTopLength=(canvas.offsetTop-canvas.clientTop)/2;
-    //let filterFunc=(bubble) => { return bubble.checkCollison(e.clientX-boundingElement.top-borderTopLength,e.clientY-boundingElement.left-borderLeftLength,0) };
-    let filterFunc=(bubble) => { return bubble.checkCollison(e.clientX-boundingElement.top,e.clientY-boundingElement.left,0) };
+    let borderLeftLength=+(getComputedStyle(canvas,null).getPropertyValue('border-left-width').slice(0,-2));
+    let borderTopLength=+(getComputedStyle(canvas,null).getPropertyValue('border-top-width').slice(0,-2));
+    let filterFunc=(bubble) => { return bubble.checkCollison(e.clientX-boundingElement.left-borderLeftLength,e.clientY-boundingElement.top-borderTopLength,0) };
     let items=bubbleArray.filter(filterFunc);
     for(let i=0;i<items.length;i++)
     {
@@ -211,12 +209,60 @@ function clickEvent(e)
     }
 }
 
+//#region testing area
+function createBubbleTest()
+{
+    let bubbleContainerElement=document.getElementById("bubbleContainerCanvas");
+    let maxLeft=bubbleContainerElement.clientWidth;
+    //create bubble
+
+    let cointToss= Math.round(Math.random());
+    let newPosVerti=100;
+    let direction=0;
+
+    let newPosHori=100;
+
+    let bubbleToAdd = new BubbleClass(newPosHori,newPosVerti,direction);
+    bubbleArray.push(bubbleToAdd);
+}
+
+function animatedBoardTest()
+{
+    removeKilledBubles();
+
+    initCanvasSize();
+    resetBoard();
+
+    for(let i=0;i<bubbleArray.length;i++)
+    {
+        let bubbleToDraw=(bubbleArray[i]);
+        if(!bubbleToDraw.isDelete)
+        {
+            bubbleToDraw.move();
+            drawBubble(bubbleToDraw);
+        }
+    }
+    window.requestAnimationFrame(animatedBoardTest);
+}
+
+function resetTest()
+{
+    bubbleArray=[];
+    createBubbleTest();
+    initCanvasSize();
+    resetBoard();
+}
+
+//#endregion
+
 fillBubbleArray();
+//createBubbleTest();
 
 
-document.getElementById("resetButton").onclick=resetBoard;
+document.getElementById("resetButton").onclick=resetTest;
 
 window.requestAnimationFrame(animatedBoard);
+//window.requestAnimationFrame(animatedBoardTest);
 
 let canvas=document.getElementById("bubbleContainerCanvas");
 canvas.addEventListener("click", (e)=>{clickEvent(e);});

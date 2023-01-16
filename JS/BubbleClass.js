@@ -1,7 +1,6 @@
 "use strict";
 
-import { BUBBLE_SPEED_MAX,BUBBLE_SPEED_MIN,MAX_BUBBLE_RADIUS } from "./CONFIG.js"
-import {v4 as uuidv4} from "https://cdn.skypack.dev/uuid";
+import { BUBBLE_SPEED_MAX,BUBBLE_SPEED_MIN,MAX_BUBBLE_RADIUS,MIN_BUBBLE_RADIUS } from "./CONFIG.js"
 
 //TODO: Do i need the UUID if I use canvas?
 
@@ -11,10 +10,10 @@ export class BubbleClass
     constructor(xPos,yPos,direction)
     {
         this.speed=Math.random()*(BUBBLE_SPEED_MAX-BUBBLE_SPEED_MIN) + BUBBLE_SPEED_MIN;
-        this.id=uuidv4();
         this.xPos=xPos;
         this.yPos=yPos;
-        this.radius=MAX_BUBBLE_RADIUS;
+        //this.radius=MAX_BUBBLE_RADIUS;
+        this.radius=Math.random()*(MAX_BUBBLE_RADIUS-MIN_BUBBLE_RADIUS) + MIN_BUBBLE_RADIUS;
         this.direction=direction;
         this.isDelete=false;
         //this.color=2;
