@@ -36,3 +36,11 @@
     font-size: x-large;
     font-weight: bold;
 }
+
+.weaponDiv{
+    margin-top: 5px;
+}
+
+.weaponDiv > button{
+    width: 70%;
+}
