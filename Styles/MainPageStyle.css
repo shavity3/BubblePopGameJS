@@ -1,17 +1,38 @@
 /* TODO: replace height and width with better radius*/
 
-.bubbleContainer{
-    width: 80%;
+.playTable{
+    width: 100%;
     height: 80%;
+}
+
+.playAreaTd{
+    width: 80%;
+}
+
+.bubbleContainer{
+    width: 100%;
+    height: 100%;
     border: 5px;
     border-color: black;
     border-style: solid;
 }
 
-.wrapper{
-    overflow: auto;
+.sideMenuDiv{
+    vertical-align: top;
 }
 
-.sideMenu{
-    float: right;
+.scoreAreaTd
+{
+    text-align: center;
+    vertical-align: top;
+}
+
+.scoreSpanText{
+    font-size: large;
+    font-weight: bold;
+}
+
+.scoreSpanValue{
+    font-size: x-large;
+    font-weight: bold;
 }

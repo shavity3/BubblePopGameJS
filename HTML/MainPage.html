@@ -8,15 +8,31 @@
         </title>
     </head>
     <body>
-        <div class="wrapper">
-            <canvas id="bubbleContainerCanvas" class="bubbleContainer">
-                <span>Failure to load the canvas.</span>
-            </canvas>
-            <div class="sideMenu">
-                <span>Bubble clicked:</span>
-                <span id="bubbleClickCount">0</span>
-            </div>
-        </div>
+        <table class="playTable">
+            <tr>
+                <td class="playAreaTd">
+                    <canvas id="bubbleContainerCanvas" class="bubbleContainer">
+                        <span>Failure to load the canvas.</span>
+                    </canvas>
+                </td>
+                <td class="scoreAreaTd">
+                    <div>
+                        <div class="scoreAreaDiv">
+                            <span class="scoreSpanText">Bubble clicked:</span> <br>
+                            <span id="bubbleClickCount" class="scoreSpanValue">0</span>
+                        </div>
+                        <!-- bomb area-->
+                        <div>
+                            <button id="bombButton" disabled="true">No Bombs.</button>
+                        </div>
+                        <!-- freeze ray area-->
+                        <div>
+                            <button id="freezeRayButton" disabled="true">No Freeze Rays.</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
 
     <div>
         <button id="resetButton">Reset Test</button>
