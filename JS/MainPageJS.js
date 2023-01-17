@@ -123,10 +123,12 @@ function drawBubble(bubbleToDraw)
     //context.strokeStyle = "red";
     //context.globalAlpha = 0.5;
 
+    context.fillStyle = bubbleToDraw.color;
+
     context.beginPath();
     context.arc(bubbleToDraw.xPos,bubbleToDraw.yPos,bubbleToDraw.radius,0,2*Math.PI);
     //context.fill();
-    context.stroke();
+    context.fill();
 }
 
 function initCanvasSize()
@@ -207,6 +209,7 @@ function clickEvent(e)
         items[i].kill();
         bubbleKilled++;
     }
+    document.getElementById("bubbleClickCount").innerHTML=bubbleKilled;
 }
 
 //#region testing area

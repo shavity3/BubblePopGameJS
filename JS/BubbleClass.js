@@ -2,7 +2,16 @@
 
 import { BUBBLE_SPEED_MAX,BUBBLE_SPEED_MIN,MAX_BUBBLE_RADIUS,MIN_BUBBLE_RADIUS } from "./CONFIG.js"
 
-//TODO: Do i need the UUID if I use canvas?
+//const values for creating random colors
+const MIN_R_VALUE=155;
+const MAX_R_VALUE=255;
+
+const MIN_G_VALUE=155;
+const MAX_G_VALUE=255;
+
+const MIN_B_VALUE=155;
+const MAX_B_VALUE=255;
+
 
 export class BubbleClass
 //class BubbleClass
@@ -17,6 +26,11 @@ export class BubbleClass
         this.direction=direction;
         this.isDelete=false;
         //this.color=2;
+        let rValue=Math.round(Math.random()*(MAX_R_VALUE-MIN_R_VALUE) + MIN_R_VALUE);
+        let gValue=Math.round(Math.random()*(MAX_G_VALUE-MIN_G_VALUE) + MIN_G_VALUE);
+        let bValue=Math.round(Math.random()*(MAX_B_VALUE-MIN_B_VALUE) + MIN_B_VALUE);
+
+        this.color="rgba(" + rValue +"," + gValue + "," + bValue + ")";
     }
 
     move()

@@ -8,11 +8,15 @@
         </title>
     </head>
     <body>
-        <div>
-        <canvas id="bubbleContainerCanvas" class="bubbleContainer">
-            <span>Failure to load the canvas.</span>
-        </canvas>
-    </div>
+        <div class="wrapper">
+            <canvas id="bubbleContainerCanvas" class="bubbleContainer">
+                <span>Failure to load the canvas.</span>
+            </canvas>
+            <div class="sideMenu">
+                <span>Bubble clicked:</span>
+                <span id="bubbleClickCount">0</span>
+            </div>
+        </div>
 
     <div>
         <button id="resetButton">Reset Test</button>
