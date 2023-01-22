@@ -52,9 +52,9 @@ export class WeaponFreezeRay extends Weapon
         this.genericLoad(killedBubbles,FREEZE_REQ);
     }
 
-    updateButton()
+    updateButton(willNotEnableButton)
     {
-        this.genericUpdateButton(GET_FREEZE_TEXT);
+        this.genericUpdateButton(GET_FREEZE_TEXT,willNotEnableButton);
     }
 
     buttonClick()

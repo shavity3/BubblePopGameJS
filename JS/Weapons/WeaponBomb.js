@@ -55,9 +55,9 @@ export class WeaponBomb extends Weapon
         this.genericLoad(killedBubbles,BOMB_REQ);
     }
 
-    updateButton()
+    updateButton(willNotEnableButton)
     {
-        this.genericUpdateButton(GET_BOMB_TEXT);
+        this.genericUpdateButton(GET_BOMB_TEXT,willNotEnableButton);
     }
 
     buttonClick()

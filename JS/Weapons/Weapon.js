@@ -2,7 +2,7 @@
 
 import { CANCEL_TEXT } from "../CONFIG.js"
 
-export class PrototypeWeapon
+export class Weapon
 {
     constructor(buttonObj)
     {
@@ -39,12 +39,12 @@ export class PrototypeWeapon
 
     disableButton()
     {
-        buttonObj.disabled = true;
+        this.buttonObj.disabled = true;
     }
 
     enableButton()
     {
-        buttonObj.disabled = false;
+        this.buttonObj.disabled = false;
     }
 
     updateButton()
@@ -72,26 +72,32 @@ export class PrototypeWeapon
 
     }
     
-    genericUpdateButton(weaponText)
+    genericUpdateButton(weaponText,willNotEnableButton)
     {
         if(this.selfEvent)
         {
             this.buttonObj.innerHTML = CANCEL_TEXT;
         }
-        else if(weaponCount==0)
+        else if(this.weaponCount==0)
         {
             this.buttonObj.innerHTML = weaponText + this.weaponCount;
-            this.disableButton();
+            if(!willNotEnableButton)
+            {
+                this.disableButton();
+            }
         }
         else
         {
             this.buttonObj.innerHTML = weaponText + this.weaponCount;
-            this.enableButton();
+            if(!willNotEnableButton)
+            {
+                this.enableButton();
+            }
         }
     }
 
     //the inherited function all descendats will overwrite
-    updateButton()
+    updateButton(willNotEnableButton)
     {
 
     }
@@ -131,7 +137,7 @@ export class PrototypeWeapon
         return;
     }
 
-    drawAllPersistentItemsInArray(canvas)
+    drawAllPersistentItemsInArray(context,height,width)
     {
         return;
     }

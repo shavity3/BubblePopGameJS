@@ -1,6 +1,6 @@
 "use strict";
 
-import { BubbleClass } from "./BubbleClass.js"
+import { BubbleClass } from "../BubbleClass.js"
 import { WeaponBomb } from "./WeaponBomb.js"
 import { WeaponFreezeRay } from "./WeaponFreezeRay.js"
 import { WeaponBouncyBall } from "./WeaponBouncyBall.js"
@@ -12,35 +12,37 @@ let weaponBouncyBall;
 
 let weaponArray=[];
 
-initArsenal(bombButtonObj,freezeRayButtonObj,bouncyBallButtonObj)
+let stopEnablingButtons=false;
+
+export function initArsenal(bombButtonObj,freezeRayButtonObj,bouncyBallButtonObj)
 {
     initWeaponBomb(bombButtonObj);
     initWeaponFreezeRay(freezeRayButtonObj)
     initWeaponBouncyBall(bouncyBallButtonObj)
 }
 
-initWeaponBomb(buttonObj)
+function initWeaponBomb(buttonObj)
 {
     weaponBombItem = new WeaponBomb(buttonObj);
     buttonObj.onclick=bombButtonClick;
     weaponArray.push(weaponBombItem);
 }
 
-initWeaponFreezeRay(buttonObj)
+function initWeaponFreezeRay(buttonObj)
 {
     weaponFreezeRayItem = new WeaponFreezeRay(buttonObj);
     buttonObj.onclick=freezeRayButtonClick;
     weaponArray.push(weaponFreezeRayItem);
 }
 
-initWeaponBouncyBall(buttonObj)
+function initWeaponBouncyBall(buttonObj)
 {
     weaponBouncyBall = new WeaponBouncyBall(buttonObj);
     buttonObj.onclick=bouncyBallButtonClick;
     weaponArray.push(weaponBouncyBall);
 }
 
-presistentItemsCollision(bubbleArray)
+export function presistentItemsCollision(bubbleArray)
 {
     let bubblesRemoved=0;
     for(let i=0;i<weaponArray.length;i++)
@@ -48,17 +50,28 @@ presistentItemsCollision(bubbleArray)
         //if the weapon chosen has presistent obhects
         if(weaponArray[i].persistentArray.length>0)
         {
-            bubblesRemoved+=weaponArray[i].checkPersistentArrayCollision(bubbleArray)
-            weaponArray[i].checkOutofPersistentItems(height,width);
+            bubblesRemoved+=weaponArray[i].checkPersistentArrayCollision(bubbleArray);
         }
     }
 
     loadWeapons(bubblesRemoved);
-    updateWeaponButtons();
+    updateWeaponButtons(stopEnablingButtons);
     return bubblesRemoved;
 }
 
-presistentItemsRemove()
+export function presistentItemsOutOfBounds(width,height)
+{
+    for(let i=0;i<weaponArray.length;i++)
+    {
+        //if the weapon chosen has presistent obhects
+        if(weaponArray[i].persistentArray.length>0)
+        {
+            weaponArray[i].checkOutofPersistentItems(width,height);
+        }
+    }
+}
+
+export function presistentItemsRemove()
 {
     for(let i=0;i<weaponArray.length;i++)
     {
@@ -70,19 +83,19 @@ presistentItemsRemove()
     }
 }
 
-presistentItemsDraw(canvas)
+export function presistentItemsDraw(context,width,height)
 {
     for(let i=0;i<weaponArray.length;i++)
     {
         //if the weapon chosen has presistent obhects
         if(weaponArray[i].persistentArray.length>0)
         {
-            weaponArray[i].drawAllPersistentItemsInArray(canvas);
+            weaponArray[i].drawAllPersistentItemsInArray(context,width,height);
         }
     }
 }
 
-clickEvent(bubbleArray,mouseX,mouseY)
+export function clickEvent(bubbleArray,mouseX,mouseY)
 {
     let bubblesRemoved=0;
     let wasEventTriggered=false;
@@ -100,7 +113,7 @@ clickEvent(bubbleArray,mouseX,mouseY)
     //if no event was triggered treat it as a normal click
     if(!wasEventTriggered)
     {
-        let filterFunc=(bubble) => { return bubble.checkCollison(mouseX,mouseY,collisonRadius) };
+        let filterFunc=(bubble) => { return bubble.checkCollison(mouseX,mouseY,0) };
         let items=bubbleArray.filter(filterFunc);
         for(let i=0;i<items.length;i++)
         {
@@ -110,11 +123,13 @@ clickEvent(bubbleArray,mouseX,mouseY)
     }
 
     loadWeapons(bubblesRemoved);
-    updateWeaponButtons();
+    //since if their was a weapon it was used in the click the program always udates the buttons
+    stopEnablingButtons=false;
+    updateWeaponButtons(stopEnablingButtons);
     return bubblesRemoved;
 }
 
-loadWeapons(bubblesRemoved)
+export function loadWeapons(bubblesRemoved)
 {
     for(let i=0;i<weaponArray.length;i++)
     {
@@ -122,15 +137,15 @@ loadWeapons(bubblesRemoved)
     }
 }
 
-updateWeaponButtons();
+export function updateWeaponButtons(willNotEnableButton)
 {
     for(let i=0;i<weaponArray.length;i++)
     {
-        weaponArray[i].updateButton();
+        weaponArray[i].updateButton(willNotEnableButton);
     }
 }
 
-disableAllButtons()
+export function disableAllButtons()
 {
     for(let i=0;i<weaponArray.length;i++)
     {
@@ -138,7 +153,7 @@ disableAllButtons()
     }
 }
 
-enableAllButtons()
+export function enableAllButtons()
 {
     for(let i=0;i<weaponArray.length;i++)
     {
@@ -146,21 +161,23 @@ enableAllButtons()
     }
 }
 
-weaponClick(weaponObj)
+export function weaponClick(weaponObj)
 {
     if(weaponObj.selfEvent)
     {
-        weaponObj.buttonClick();
+        stopEnablingButtons=false;
         enableAllButtons();
+        weaponObj.buttonClick();
     }
     else
     {
-        weaponObj.buttonClick();
+        stopEnablingButtons=true;
         disableAllButtons();
+        weaponObj.buttonClick();
     }
 }
 
-weaponMouseOverDraw(context,mouseX,mouseY)
+export function weaponMouseOverDraw(context,mouseX,mouseY)
 {
     for(let i=0;i<weaponArray.length;i++)
     {
@@ -175,17 +192,17 @@ weaponMouseOverDraw(context,mouseX,mouseY)
     }
 }
 
-bombButtonClick()
+export function bombButtonClick()
 {
     weaponClick(weaponBombItem);
 }
 
-freezeRayButtonClick()
+export function freezeRayButtonClick()
 {
     weaponClick(weaponFreezeRayItem);
 }
 
-bouncyBallButtonClick()
+export function bouncyBallButtonClick()
 {
     weaponClick(weaponBouncyBall);
 }

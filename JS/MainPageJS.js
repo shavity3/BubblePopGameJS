@@ -3,6 +3,7 @@
 import { BubbleClass } from "./BubbleClass.js"
 import { BouncyBallClass } from "./BouncyBallClass.js";
 import { MAX_BUBBLE_RADIUS,CANCEL_TEXT } from "./CONFIG.js"
+import * as Arsenal from "./Weapons/Arsenal.js"
 
 const GET_BOMB_TEXT = "Number of Bombs: ";
 
@@ -60,18 +61,27 @@ let bubbleKilled=0;
 //this function is responsible for drawing, animating and handling all the items in the canvas
 function animatedBoard()
 {
+    let canvas=document.getElementById("bubbleContainerCanvas");
+    let context = canvas.getContext("2d");
+    let height=canvas.height;
+    let width=canvas.width;
+    let thisDrawRemovedBubbles=0;
+
     checkAllBubbleCollision();
     checkOutofBoundBubbles();
 
     //enter presistent object collision here
-    checkAllBallCollision();
-    checkOutofBoundBalls();
+    thisDrawRemovedBubbles += Arsenal.presistentItemsCollision(bubbleArray);
+    Arsenal.presistentItemsOutOfBounds(width,height);
+    //checkAllBallCollision();
+    //checkOutofBoundBalls();
     
     removeKilledBubbles();
     fillBubbleArray();
 
     //remove presistent object that timed out here
-    removeDeadBalls();
+    Arsenal.presistentItemsRemove();
+    //removeDeadBalls();
 
     initCanvasSize();
     resetBoard();
@@ -79,9 +89,17 @@ function animatedBoard()
     drawAllBubblesInArray();
 
     //TODO URGENT enter presistent object drawing here
-    drawAllActiveBallsInArray();
+    Arsenal.presistentItemsDraw(context,width,height)
+    //drawAllActiveBallsInArray();
 
-    drawWeapons();
+    Arsenal.weaponMouseOverDraw(context,mouseX,mouseY);
+    //drawWeapons();
+
+    if(thisDrawRemovedBubbles>0)
+    {
+        bubbleKilled += thisDrawRemovedBubbles;
+        document.getElementById("bubbleClickCount").innerHTML=bubbleKilled;
+    }
 
     window.requestAnimationFrame(animatedBoard);
 }
@@ -100,6 +118,10 @@ function resetBoard()
 //this function handles a click on the canvas according to what weapon event is currently on (including no weapon event)
 function clickEvent(e)
 {
+    let clickBubblesKilled = Arsenal.clickEvent(bubbleArray,mouseX,mouseY);
+    bubbleKilled+=clickBubblesKilled;
+    document.getElementById("bubbleClickCount").innerHTML=bubbleKilled;
+    /*
     let canvas=document.getElementById("bubbleContainerCanvas");
     let boundingElement = canvas.getBoundingClientRect();
     let borderLeftLength=+(getComputedStyle(canvas,null).getPropertyValue('border-left-width').slice(0,-2));
@@ -175,6 +197,7 @@ function clickEvent(e)
     }
     document.getElementById("bubbleClickCount").innerHTML=bubbleKilled;
     updateWeapons();
+    */
 }
 
 //creats a single bubble and pushes it into the bubble array
@@ -813,13 +836,18 @@ function resetTest()
 fillBubbleArray();
 //createBubbleTest();
 
+Arsenal.initArsenal(document.getElementById("bombButton"),
+    document.getElementById("freezeRayButton"),
+    document.getElementById("ballButton"));
 
-//document.getElementById("resetButton").onclick=resetTest;
-
+document.getElementById("bombButton").onclick=Arsenal.bombButtonClick;
+document.getElementById("freezeRayButton").onclick=Arsenal.freezeRayButtonClick;
+document.getElementById("ballButton").onclick=Arsenal.bouncyBallButtonClick;
+/*
 document.getElementById("bombButton").onclick=bombButtonClick;
 document.getElementById("freezeRayButton").onclick=freezeButtonClick;
 document.getElementById("ballButton").onclick=ballButtonClick;
-
+*/
 window.requestAnimationFrame(animatedBoard);
 //window.requestAnimationFrame(animatedBoardTest);
 

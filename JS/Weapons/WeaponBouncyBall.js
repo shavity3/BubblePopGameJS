@@ -27,7 +27,7 @@ export class WeaponBouncyBall extends Weapon
             return;
         }
 
-        context.fillStyle = ballColor;
+        context.fillStyle = this.outLineColor;
     
         context.beginPath();
         context.arc(mouseX,mouseY,BALL_RADIUS,0,2*Math.PI);
@@ -40,9 +40,9 @@ export class WeaponBouncyBall extends Weapon
         this.genericLoad(killedBubbles,BALL_REQ);
     }
 
-    updateButton()
+    updateButton(willNotEnableButton)
     {
-        this.genericUpdateButton(GET_BALL_TEXT);
+        this.genericUpdateButton(GET_BALL_TEXT,willNotEnableButton);
     }
 
     buttonClick()
@@ -100,10 +100,11 @@ export class WeaponBouncyBall extends Weapon
                 }
             }
         }
+        return killedBubbles;
     }
 
     //set deleteion for all balls that are out of the canvas frame
-    checkOutofPersistentItems(height,width)
+    checkOutofPersistentItems(width,height)
     {
         for(let runner=0;runner<this.persistentArray.length;runner++)
         {
@@ -137,24 +138,23 @@ export class WeaponBouncyBall extends Weapon
     }
 
     //draw all the bouncy balls in the array on the canvas
-    drawAllPersistentItemsInArray(canvas)
+    drawAllPersistentItemsInArray(context,width,height)
     {
         for(let i=0;i<this.persistentArray.length;i++)
         {
             let ballToDraw=(this.persistentArray[i]);
             if(!ballToDraw.isDelete)
             {
-                ballToDraw.move(canvas.width,canvas.height);
-                drawActiveBall(ballToDraw);
+                ballToDraw.move(width,height);
+                this.drawActiveBall(ballToDraw,context);
             }
         }
     }
 
     //this function is responsible for how the ball is drawn on the canvas after it is released
-    drawActiveBall(ballToDraw,canvas)
+    drawActiveBall(ballToDraw,context)
     {
         //TODO URGENT add velocity
-        let context = canvas.getContext("2d");
     
         context.fillStyle = ballActiveColor;
     
