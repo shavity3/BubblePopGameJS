@@ -2,9 +2,7 @@
 
 import { BubbleClass } from "./BubbleClass.js"
 import { BouncyBallClass } from "./BouncyBallClass.js";
-import { MAX_BUBBLE_RADIUS } from "./CONFIG.js"
-
-const CANCEL_TEXT = "Cancel.";
+import { MAX_BUBBLE_RADIUS,CANCEL_TEXT } from "./CONFIG.js"
 
 const GET_BOMB_TEXT = "Number of Bombs: ";
 

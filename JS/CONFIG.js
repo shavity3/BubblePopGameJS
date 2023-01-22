@@ -12,3 +12,5 @@ export const MIN_BUBBLE_RADIUS=10;
 export const BALL_RADIUS = 30;
 export const BALL_MAX_LIFETIME = 600;
 export const BALL_SPEED=2;
+
+export const CANCEL_TEXT = "Cancel.";
