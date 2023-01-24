@@ -222,8 +222,6 @@ function drawAllBubblesInArray()
     }
 }
 
-//TODO URGENT Resizing has a bug: it enlarges the canvas size permanantly
-
 //adjusts the canvas size based on the size of the window
 function initCanvasSize()
 {

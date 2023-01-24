@@ -1,8 +1,5 @@
-/* TODO: replace height and width with better radius*/
-
 .playTable{
     width: 100%;
-    height: 80%;
 }
 
 .playAreaTd{
@@ -43,4 +40,20 @@
 
 .weaponDiv > button{
     width: 70%;
+}
+
+.divGameRules{
+    width: 80%;
+    margin: auto;
+}
+.divGameRules .h1{
+    text-align: center;
+}
+
+.ruleStyle{
+    text-align: left;
+}
+
+.spanBold{
+    font-weight: bold;
 }

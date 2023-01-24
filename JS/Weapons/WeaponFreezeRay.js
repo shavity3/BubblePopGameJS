@@ -1,15 +1,7 @@
 "use strict";
 
 import { Weapon } from "./Weapon.js"
-
-const GET_FREEZE_TEXT = "Number of Freeze Rays: ";
-
-const FREEZE_RADIUS = 150;
-const FREEZE_LINE_DASH=4;
-const FREEZE_LINE_MAX_OFFSET=16;
-const FREEZE_REQ=5;
-
-const FREEZE_COLOR = "teal";
+import { GET_FREEZE_TEXT,FREEZE_RADIUS,FREEZE_LINE_DASH,FREEZE_LINE_MAX_OFFSET,FREEZE_REQ,FREEZE_COLOR } from "../CONFIG.js"
 
 export class WeaponFreezeRay extends Weapon
 {

@@ -1,15 +1,7 @@
 "use strict";
 
 import { Weapon } from "./Weapon.js"
-
-const GET_BOMB_TEXT = "Number of Bombs: ";
-
-const BOMB_RADIUS = 50;
-const BOMB_LINE_DASH=4;
-const BOMB_LINE_MAX_OFFSET=16;
-const BOMB_REQ=3;
-
-const BOMB_COLOR = "red";
+import { GET_BOMB_TEXT,BOMB_RADIUS,BOMB_LINE_DASH,BOMB_LINE_MAX_OFFSET,BOMB_REQ,BOMB_COLOR } from "../CONFIG.js"
 
 export class WeaponBomb extends Weapon
 {

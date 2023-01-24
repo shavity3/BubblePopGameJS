@@ -2,11 +2,7 @@
 
 import { Weapon } from "./Weapon.js"
 import { BouncyBallClass } from "../BouncyBallClass.js"
-
-const GET_BALL_TEXT = "Number of Bouncy Balls: ";
-
-const BALL_RADIUS = 30;
-const BALL_REQ=5;
+import { GET_BOUNCY_BALL_TEXT,BOUNCY_BALL_RADIUS,BOUNCY_BALL_REQ } from "../CONFIG.js"
 
 let outlineBallColor="rgba(128,0,128,0.4)";
 let ballActiveColor="rgb(128,0,128)";
@@ -30,31 +26,31 @@ export class WeaponBouncyBall extends Weapon
         context.fillStyle = this.outLineColor;
     
         context.beginPath();
-        context.arc(mouseX,mouseY,BALL_RADIUS,0,2*Math.PI);
+        context.arc(mouseX,mouseY,BOUNCY_BALL_RADIUS,0,2*Math.PI);
         context.fill();
     }
 
     //reloading the weapon according to the bubbles killed
     loadSelf(killedBubbles)
     {
-        this.genericLoad(killedBubbles,BALL_REQ);
+        this.genericLoad(killedBubbles,BOUNCY_BALL_REQ);
     }
 
     updateButton(willNotEnableButton)
     {
-        this.genericUpdateButton(GET_BALL_TEXT,willNotEnableButton);
+        this.genericUpdateButton(GET_BOUNCY_BALL_TEXT,willNotEnableButton);
     }
 
     buttonClick()
     {
-        this.genericButtonClick(GET_BALL_TEXT);
+        this.genericButtonClick(GET_BOUNCY_BALL_TEXT);
     }
 
     clickEvent(bubbleArray,mouseX,mouseY)
     {
         let killedBubbles=0;
 
-        let collisonRadius=BALL_RADIUS;
+        let collisonRadius=BOUNCY_BALL_RADIUS;
         this.weaponCount--;
         this.selfEvent=false;
         this.persistentArray.push(new BouncyBallClass(mouseX,mouseY));
@@ -154,12 +150,10 @@ export class WeaponBouncyBall extends Weapon
     //this function is responsible for how the ball is drawn on the canvas after it is released
     drawActiveBall(ballToDraw,context)
     {
-        //TODO URGENT add velocity
-    
         context.fillStyle = ballActiveColor;
     
         context.beginPath();
-        context.arc(ballToDraw.xPos,ballToDraw.yPos,BALL_RADIUS,0,2*Math.PI);
+        context.arc(ballToDraw.xPos,ballToDraw.yPos,BOUNCY_BALL_RADIUS,0,2*Math.PI);
         context.fill();
         
     }
