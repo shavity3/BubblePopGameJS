@@ -1,4 +1,4 @@
-# IdlerProtoytypeJS
+# BubblePopGameJS
 An simple game where you pop bubbles that move on the screen and gain new abilites as you pop more bubbles.
 <div id="GameExplanation" class="divGameRules">
             <h1>Game Explanation</h1>
